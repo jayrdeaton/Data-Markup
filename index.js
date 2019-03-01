@@ -7,13 +7,18 @@ module.exports = (data) => {
   const prettyPrintVariable = (data, pad) => {
     // Array, Object, Date, Number, Bool, String
     if (Array.isArray(data)) {
-      result += result.endsWith(': ') ? '[\n' : `${pad}[\n`;
-      for (const [index, item] of data.entries()) {
-        prettyPrintVariable(item, `${pad}${tab}`);
-        if (index === data.length - 1) {
-          result += '\n';
-        } else {
-          result += ',\n';
+      result += result.endsWith(': ') ? '[' : `${pad}[`;
+      if (data.length === 0) {
+        result += ']';
+      } else {
+        result += '\n';
+        for (const [index, item] of data.entries()) {
+          prettyPrintVariable(item, `${pad}${tab}`);
+          if (index === data.length - 1) {
+            result += '\n';
+          } else {
+            result += ',\n';
+          };
         };
       };
       result +=`${pad}]`;
@@ -22,18 +27,23 @@ module.exports = (data) => {
     } else if (data === null) {
       result += cosmetic.bold('null');
     } else if (typeof data === 'object') {
-      result += result.endsWith(': ') ? '{\n' : `${pad}{\n`;
-      for (const [index, key] of Object.keys(data).entries()) {
-        result += `${pad}${tab}${key}: `;
-        if (typeof data[key] === 'object') {
-          prettyPrintVariable(data[key], `${pad}${tab}`);
-        } else {
-          prettyPrintVariable(data[key], '');
-        }
-        if (index === Object.keys(data).length - 1) {
-          result += '\n';
-        } else {
-          result += ',\n';
+      result += result.endsWith(': ') ? '{' : `${pad}{`;
+      if (Object.keys(data).length === 0) {
+        result += '}';
+      } else {
+        result += '\n';
+        for (const [index, key] of Object.keys(data).entries()) {
+          result += `${pad}${tab}${key}: `;
+          if (typeof data[key] === 'object') {
+            prettyPrintVariable(data[key], `${pad}${tab}`);
+          } else {
+            prettyPrintVariable(data[key], '');
+          }
+          if (index === Object.keys(data).length - 1) {
+            result += '\n';
+          } else {
+            result += ',\n';
+          };
         };
       };
       result += `${pad}}`;
