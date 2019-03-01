@@ -19,6 +19,8 @@ module.exports = (data) => {
       result +=`${pad}]`;
     } else if (data instanceof Date) {
       result += cosmetic.magenta(`${data.toLocaleDateString()} @ ${data.toLocaleTimeString()}`);
+    } else if (data === null) {
+      result += cosmetic.bold('null');
     } else if (typeof data === 'object') {
       result += result.endsWith(': ') ? '{\n' : `${pad}{\n`;
       for (const [index, key] of Object.keys(data).entries()) {
