@@ -1,4 +1,4 @@
-const markup = require('..'),
+const markup = require('./'),
   faker = require('faker'),
   chai = require('chai'),
   should = chai.should();
