@@ -20,8 +20,8 @@ module.exports = (data) => {
             result += ',\n';
           };
         };
+        result +=`${pad}]`;
       };
-      result +=`${pad}]`;
     } else if (data instanceof Date) {
       result += cosmetic.magenta(`${data.toLocaleDateString()} @ ${data.toLocaleTimeString()}`);
     } else if (data === null) {
@@ -45,8 +45,8 @@ module.exports = (data) => {
             result += ',\n';
           };
         };
+        result += `${pad}}`;
       };
-      result += `${pad}}`;
     } else if (typeof data === 'number') {
       result += cosmetic.yellow(`${pad}${data.toString()}`);
     } else if (typeof data === 'boolean') {
