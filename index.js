@@ -1,9 +1,10 @@
 const cosmetic = require('cosmetic');
 
-module.exports = (data) => {
+module.exports = (data, opts) => {
   const tab = '  ';
   let pad = '';
   let result = '';
+  const translations = opts ? opts.translations : {};
   const prettyPrintVariable = (data, pad) => {
     // Array, Object, Date, Number, Bool, String
     if (Array.isArray(data)) {
@@ -34,6 +35,7 @@ module.exports = (data) => {
         result += '\n';
         for (const [index, key] of Object.keys(data).entries()) {
           result += `${pad}${tab}${key}: `;
+          if (translations[key]) data[key] = translations[key](data[key]);
           if (typeof data[key] === 'object') {
             prettyPrintVariable(data[key], `${pad}${tab}`);
           } else {

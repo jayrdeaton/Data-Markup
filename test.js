@@ -46,4 +46,14 @@ describe('Data-Markup', () => {
       should.equal(typeof result, 'string');
     });
   });
+  describe('markup(object, { translations })', () => {
+    it('should successfully translate', () => {
+      const a = faker.random.word();
+      const b = faker.random.word();
+      const c = faker.random.word();
+      const result = markup({ a, b }, { translations: { a: (v) => v + c }});
+      should.equal(typeof result, 'string');
+      should.equal(result.includes(a + c), true);
+    });
+  });
 });
