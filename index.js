@@ -4,7 +4,15 @@ module.exports = (data, opts) => {
   const tab = '  ';
   let pad = '';
   let result = '';
-  const translations = opts ? opts.translations : {};
+  const translations = opts && opts.translations ? opts.translations : {};
+
+  const styles = opts && opts.styles ? opts.styles : {};
+  if (!styles.date) styles.date = (i) => cosmetic.magenta(i);
+  if (!styles.null) styles.null = (i) => cosmetic.bold(i);
+  if (!styles.number) styles.number = (i) => cosmetic.yellow(i);
+  if (!styles.boolean) styles.boolean = (i) => cosmetic.yellow(i);
+  if (!styles.string) styles.string = (i) => cosmetic.green(i);
+
   const prettyPrintVariable = (data, pad) => {
     // Array, Object, Date, Number, Bool, String
     if (Array.isArray(data)) {
@@ -24,9 +32,9 @@ module.exports = (data, opts) => {
         result +=`${pad}]`;
       };
     } else if (data instanceof Date) {
-      result += cosmetic.magenta(`${data.toLocaleDateString()} @ ${data.toLocaleTimeString()}`);
+      result += styles.date(data);
     } else if (data === null) {
-      result += cosmetic.bold('null');
+      result += styles.null('null');
     } else if (typeof data === 'object') {
       result += result.endsWith(': ') ? '{' : `${pad}{`;
       if (Object.keys(data).length === 0) {
@@ -50,11 +58,11 @@ module.exports = (data, opts) => {
         result += `${pad}}`;
       };
     } else if (typeof data === 'number') {
-      result += cosmetic.yellow(`${pad}${data.toString()}`);
+      result += styles.number(`${pad}${data.toString()}`);
     } else if (typeof data === 'boolean') {
-      result += cosmetic.yellow(data.toString());
+      result += styles.boolean(data.toString());
     } else if (typeof data === 'string') {
-      result += cosmetic.green(`${pad}'${data}'`);
+      result += styles.string(`${pad}'${data}'`);
     };
   };
   prettyPrintVariable(data, pad);
