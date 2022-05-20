@@ -1,6 +1,6 @@
 {
   "name": "data-markup",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Takes data and returns a marked up string",
   "main": "index.js",
   "scripts": {
